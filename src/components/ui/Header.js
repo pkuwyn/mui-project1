@@ -12,22 +12,6 @@ import Tab from "@material-ui/core/Tab";
 //local import
 import logo from "../../assets/logo.svg";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    background: theme.palette.secondary,
-  },
-  toolbarMargin: {
-    ...theme.mixins.toolbar,
-    marginBottom: "2rem",
-  },
-  logo: {
-    height: "5rem",
-  },
-  tabs: {
-    // minHeight: "100%",
-  },
-}));
-
 function ElevationScroll(props) {
   const { children, elevationValue } = props;
 
@@ -40,6 +24,35 @@ function ElevationScroll(props) {
     elevation: trigger ? elevationValue : 0,
   });
 }
+
+const useStyles = makeStyles((theme) => ({
+  toolbarMargin: {
+    ...theme.mixins.toolbar,
+    marginBottom: "2rem",
+  },
+  logo: {
+    height: "5rem",
+    // marginRight: "auto",
+    // flex: "1 0 0",
+  },
+  tabs: {
+    marginLeft: "auto",
+  },
+  tab: {
+    ...theme.typography.tab,
+    height: "5rem",
+    minWidth: 60,
+    marginLeft: 25,
+  },
+  button: {
+    ...theme.typography.estimate,
+    borderRadius: 100,
+    margin: "0 1.5rem 0 3rem",
+    minWidth: 140,
+    height: 35,
+  },
+  buttonLabel: {},
+}));
 
 export default function Header(props) {
   const classes = useStyles();
@@ -60,11 +73,27 @@ export default function Header(props) {
               onChange={handleChange}
               aria-label="simple tabs example"
               className={classes.tabs}
+              TabIndicatorProps={{
+                style: {
+                  display: "none",
+                },
+              }}
             >
-              <Tab label="Item One" />
-              <Tab label="Item Two" />
-              <Tab label="Item Three" />
+              <Tab label="Home" className={classes.tab} />
+              <Tab label="Service" className={classes.tab} />
+              <Tab label="The Revolution" className={classes.tab} />
+              <Tab label="About Us" className={classes.tab} />
+              <Tab label="Contact Us" className={classes.tab} />
             </Tabs>
+            {/* <h3>{value}</h3> */}
+
+            <Button
+              variant="contained"
+              color="secondary"
+              className={classes.button}
+            >
+              Free Estimate
+            </Button>
           </Toolbar>
         </AppBar>
       </ElevationScroll>
