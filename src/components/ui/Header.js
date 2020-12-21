@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -8,7 +8,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-
+import { Link, useLocation } from "react-router-dom";
 //local import
 import logo from "../../assets/logo.svg";
 
@@ -29,6 +29,13 @@ const useStyles = makeStyles((theme) => ({
   toolbarMargin: {
     ...theme.mixins.toolbar,
     marginBottom: "2rem",
+  },
+  logoButton: {
+    padding: 0,
+    border: "none",
+    "&:hover": {
+      backgroundColor: "unset",
+    },
   },
   logo: {
     height: "5rem",
@@ -54,19 +61,41 @@ const useStyles = makeStyles((theme) => ({
   buttonLabel: {},
 }));
 
+const tabLinkMap = ["/", "/services", "/revolution", "/about", "/contact"];
+
 export default function Header(props) {
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  let { pathname } = useLocation();
+  console.log(pathname);
+
+  useEffect(() => {
+    const correctValue = tabLinkMap.indexOf(pathname);
+    if (correctValue === -1) {
+      setValue(false);
+    } else {
+      correctValue === value || setValue(correctValue);
+    }
+  }, [value, pathname]);
+
   return (
     <>
       <ElevationScroll elevationValue={24}>
         <AppBar color="primary">
           <Toolbar disableGutters>
-            <img src={logo} alt="logo" className={classes.logo} />
+            <Button
+              className={classes.logoButton}
+              component={Link}
+              to="/"
+              disableRipple
+            >
+              <img src={logo} alt="logo" className={classes.logo} />
+            </Button>
 
             <Tabs
               value={value}
@@ -79,18 +108,44 @@ export default function Header(props) {
                 },
               }}
             >
-              <Tab label="Home" className={classes.tab} />
-              <Tab label="Service" className={classes.tab} />
-              <Tab label="The Revolution" className={classes.tab} />
-              <Tab label="About Us" className={classes.tab} />
-              <Tab label="Contact Us" className={classes.tab} />
+              <Tab
+                label="Home"
+                className={classes.tab}
+                component={Link}
+                to="/"
+              />
+              <Tab
+                label="Service"
+                className={classes.tab}
+                component={Link}
+                to="/services"
+              />
+              <Tab
+                label="The Revolution"
+                className={classes.tab}
+                component={Link}
+                to="/revolution"
+              />
+              <Tab
+                label="About Us"
+                className={classes.tab}
+                component={Link}
+                to="/about"
+              />
+              <Tab
+                label="Contact Us"
+                className={classes.tab}
+                component={Link}
+                to="/contact"
+              />
             </Tabs>
-            {/* <h3>{value}</h3> */}
 
             <Button
               variant="contained"
               color="secondary"
               className={classes.button}
+              component={Link}
+              to="/estimate"
             >
               Free Estimate
             </Button>
