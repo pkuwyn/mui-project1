@@ -5,7 +5,6 @@ import { zhCN } from "@material-ui/core/locale";
 //color defination
 const arcBlue = "#0B72B9";
 const arcOrange = "#FFBA60";
-
 let theme = createMuiTheme(
   {
     palette: {
@@ -13,6 +12,7 @@ let theme = createMuiTheme(
         blue: arcBlue,
         orange: arcOrange,
       },
+      // type: "dark",
       primary: {
         main: arcBlue,
       },
@@ -31,7 +31,7 @@ let theme = createMuiTheme(
       // },
 
       tab: {
-        fontFamily: "Raleway",
+        fontFamily: "Pacifico",
         fontWeight: 700,
         fontSize: "1rem",
         textTransform: "none",
@@ -68,6 +68,6 @@ let theme = createMuiTheme(
   zhCN
 );
 
-// theme = responsiveFontSizes(theme);
+theme = responsiveFontSizes(theme);
 // console.log(theme.props.MuiToolbar.root);
 export default theme;

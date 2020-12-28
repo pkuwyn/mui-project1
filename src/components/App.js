@@ -1,5 +1,5 @@
 import React from "react";
-import { ThemeProvider } from "@material-ui/core/styles";
+import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import {
   BrowserRouter as Router,
@@ -51,6 +51,7 @@ const pages = [
     name: "estimate",
   },
 ];
+
 function App(props) {
   return (
     <ThemeProvider theme={theme}>
