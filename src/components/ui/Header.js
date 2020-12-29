@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
   tab: {
     ...theme.typography.tab,
     height: "5rem",
-    minWidth: 60,
+    minWidth: 10,
     marginLeft: 25,
   },
   button: {
@@ -75,7 +75,6 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 140,
     height: 35,
   },
-  buttonLabel: {},
 }));
 
 export default function Header(props) {

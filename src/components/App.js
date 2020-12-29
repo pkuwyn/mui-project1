@@ -12,6 +12,7 @@ import {
 //local
 import theme from "./ui/theme";
 import Header from "./ui/Header";
+import Lab from "./ui/Lab";
 
 const pages = [
   {
@@ -58,6 +59,7 @@ function App(props) {
       <CssBaseline />
       <Router>
         <Header></Header>
+        <Lab classes={{ label: "my-label" }}></Lab>
         <Switch>
           {pages.map(({ path, name }) => (
             <Route

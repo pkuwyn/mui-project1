@@ -31,7 +31,7 @@ let theme = createMuiTheme(
       // },
 
       tab: {
-        fontFamily: "Pacifico",
+        fontFamily: "Raleway",
         fontWeight: 700,
         fontSize: "1rem",
         textTransform: "none",
