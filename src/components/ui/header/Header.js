@@ -8,22 +8,18 @@ import { makeStyles } from "@material-ui/core/styles";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import { Link, useLocation } from "react-router-dom";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
 
 //local import
-import logo from "../../assets/logo.svg";
-import ElevationScroll from "../utils/ElevationScroll";
-import SlideScroll from "../utils/SlideScroll";
-import ScrollTopFab from "../utils/ScrollTopFab";
+import logo from "../../../assets/logo.svg";
+import ElevationScroll from "../../utils/ElevationScroll";
+
+import TabWithMenu from "./TabWithMenu";
+import headerTabConfig from "./headerTabConfig";
 
 //config variables
 const tabLinkMap = ["/", "/services", "/revolution", "/about", "/contact"];
-const tabButtonMap = [
-  { label: "Home", path: "/" },
-  { label: "Service", path: "/services" },
-  { label: "The Revolution", path: "/revolution" },
-  { label: "About Us", path: "/about" },
-  { label: "Contact Us", path: "/contact" },
-];
 
 //tab value hook
 const useTabValue = (initValue) => {
@@ -106,15 +102,26 @@ export default function Header(props) {
                 },
               }}
             >
-              {tabButtonMap.map(({ label, path }) => (
-                <Tab
-                  key={path}
-                  label={label}
-                  className={classes.tab}
-                  component={Link}
-                  to={path}
-                />
-              ))}
+              {headerTabConfig.map(({ label, path, menu }) => {
+                return menu ? (
+                  <TabWithMenu
+                    key={path}
+                    label={label}
+                    className={classes.tab}
+                    component={Link}
+                    to={path}
+                    menu={menu}
+                  />
+                ) : (
+                  <Tab
+                    key={path}
+                    label={label}
+                    className={classes.tab}
+                    component={Link}
+                    to={path}
+                  />
+                );
+              })}
             </Tabs>
 
             <Button

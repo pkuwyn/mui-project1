@@ -1,11 +1,12 @@
 import { red } from "@material-ui/core/colors";
 import { createMuiTheme, responsiveFontSizes } from "@material-ui/core/styles";
+import { unstable_createMuiStrictModeTheme } from "@material-ui/core";
 import { zhCN } from "@material-ui/core/locale";
 
 //color defination
 const arcBlue = "#0B72B9";
 const arcOrange = "#FFBA60";
-let theme = createMuiTheme(
+let theme = unstable_createMuiStrictModeTheme(
   {
     palette: {
       common: {
@@ -34,6 +35,12 @@ let theme = createMuiTheme(
         fontFamily: "Raleway",
         fontWeight: 700,
         fontSize: "1rem",
+        textTransform: "none",
+      },
+      tabMenu: {
+        fontFamily: "Raleway",
+        fontWeight: 400,
+        fontSize: "0.8rem",
         textTransform: "none",
       },
       estimate: {

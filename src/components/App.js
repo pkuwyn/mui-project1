@@ -8,11 +8,13 @@ import {
   Link,
   Redirect,
 } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
 
 //local
 import theme from "./ui/theme";
-import Header from "./ui/Header";
+import Header from "./ui/header/Header";
 import Lab from "./ui/Lab";
+import StyledButton from "./ui/StyledButton";
 
 const pages = [
   {
@@ -59,7 +61,8 @@ function App(props) {
       <CssBaseline />
       <Router>
         <Header></Header>
-        <Lab classes={{ label: "my-label" }}></Lab>
+        {/* <Lab classes={{ label: classes.heihei }}></Lab> */}
+        {/* <StyledButton variant="contained">Hello</StyledButton> */}
         <Switch>
           {pages.map(({ path, name }) => (
             <Route

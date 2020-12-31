@@ -17,7 +17,7 @@ export default function Lab(props) {
   return (
     <>
       <Button classes={{ outlined: classes.hell }}>
-        {/* <span className={classes.label}>nested</span> */}
+        <span className={classes.label}>nested</span>
         Button1
       </Button>
 
