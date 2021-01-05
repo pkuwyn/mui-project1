@@ -37,12 +37,12 @@ let theme = unstable_createMuiStrictModeTheme(
         fontSize: "1rem",
         textTransform: "none",
       },
-      tabMenu: {
-        fontFamily: "Raleway",
-        fontWeight: 400,
-        fontSize: "0.8rem",
-        textTransform: "none",
-      },
+      // tabMenu: {
+      //   fontFamily: "Raleway",
+      //   fontWeight: 400,
+      //   fontSize: "0.8rem",
+      //   textTransform: "none",
+      // },
       estimate: {
         fontFamily: "Pacifico",
         fontSize: "1rem",

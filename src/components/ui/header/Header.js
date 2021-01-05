@@ -10,6 +10,13 @@ import Tab from "@material-ui/core/Tab";
 import { Link, useLocation } from "react-router-dom";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@material-ui/core/styles";
+import Drawer from "@material-ui/core/Drawer";
+import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
+
+//icon
+import MenuIcon from "@material-ui/icons/Menu";
 
 //local import
 import logo from "../../../assets/logo.svg";
@@ -18,8 +25,30 @@ import ElevationScroll from "../../utils/ElevationScroll";
 import TabWithMenu from "./TabWithMenu";
 import headerTabConfig from "./headerTabConfig";
 
+function getCorrectIndex(linkMap, pathname) {
+  let correctValue = -1;
+  linkMap.forEach((linkMapItem, index) => {
+    if (Array.isArray(linkMapItem)) {
+      if (linkMapItem.indexOf(pathname) !== -1) {
+        correctValue = index;
+      }
+    } else {
+      if (linkMapItem === pathname) {
+        correctValue = index;
+      }
+    }
+  });
+  return correctValue;
+}
+
 //config variables
-const tabLinkMap = ["/", "/services", "/revolution", "/about", "/contact"];
+const tabLinkMap = [
+  "/",
+  ["/services", "/customsoftware", "/mobileapps", "/websites"],
+  "/revolution",
+  "/about",
+  "/contact",
+];
 
 //tab value hook
 const useTabValue = (initValue) => {
@@ -29,7 +58,7 @@ const useTabValue = (initValue) => {
   };
   let { pathname } = useLocation();
   useEffect(() => {
-    const correctValue = tabLinkMap.indexOf(pathname);
+    const correctValue = getCorrectIndex(tabLinkMap, pathname);
     if (correctValue === -1) {
       setValue(false);
     } else {
@@ -41,10 +70,17 @@ const useTabValue = (initValue) => {
 };
 
 const useStyles = makeStyles((theme) => ({
-  toolbarMargin: {
-    ...theme.mixins.toolbar,
-    marginBottom: "2rem",
-  },
+  // toolbarMargin: {
+  //   ...theme.mixins.toolbar,
+  //   marginBottom: "2rem",
+  //   [theme.breakpoints.down("sm")]: {
+  //     marginBottom: "1.2rem",
+  //   },
+  //   [theme.breakpoints.down("xs")]: {
+  //     marginBottom: "0.5rem",
+  //   },
+  // },
+  toolbar: {},
   logoButton: {
     padding: 0,
     border: "none",
@@ -54,6 +90,12 @@ const useStyles = makeStyles((theme) => ({
   },
   logo: {
     height: "5rem",
+    [theme.breakpoints.down("sm")]: {
+      height: "4.2rem",
+    },
+    [theme.breakpoints.down("xs")]: {
+      height: "3.5rem",
+    },
   },
   tabs: {
     marginLeft: "auto",
@@ -75,13 +117,105 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Header(props) {
   const classes = useStyles();
+  const theme = useTheme();
+
+  //responsive tabs
+  const matches = useMediaQuery(theme.breakpoints.down("md"));
+
   const [value, handleChange] = useTabValue(0);
+
+  const tabs = (
+    <>
+      <Tabs
+        value={value}
+        onChange={handleChange}
+        aria-label="website menu"
+        className={classes.tabs}
+        TabIndicatorProps={{
+          style: {
+            display: "none",
+          },
+        }}
+      >
+        {headerTabConfig.map(({ label, path, menu }) => {
+          return menu ? (
+            <TabWithMenu
+              key={path}
+              label={label}
+              className={classes.tab}
+              component={Link}
+              to={path}
+              menu={menu}
+            />
+          ) : (
+            <Tab
+              key={path}
+              label={label}
+              className={classes.tab}
+              component={Link}
+              to={path}
+            />
+          );
+        })}
+      </Tabs>
+
+      <Button
+        variant="contained"
+        color="secondary"
+        className={classes.button}
+        component={Link}
+        to="/estimate"
+      >
+        Free Estimate
+      </Button>
+    </>
+  );
+
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
+  const toggleDrawer = () => {
+    setDrawerOpen(!drawerOpen);
+  };
+  const sideDrawers = (
+    <>
+      <IconButton aria-label="menu" onClick={toggleDrawer}>
+        <MenuIcon />
+      </IconButton>
+
+      {/* <Drawer
+        anchor="left"
+        open={drawerOpen}
+        onClose={toggleDrawer}
+        variant="temporary"
+      >
+        Drawer Content
+      </Drawer> */}
+
+      <SwipeableDrawer
+        disableBackdropTransition={!iOS}
+        disableDiscovery={iOS}
+        anchor="left"
+        open={drawerOpen}
+        onClose={() => {
+          toggleDrawer();
+          console.log("close");
+        }}
+        onOpen={() => {
+          toggleDrawer();
+          console.log("open");
+        }}
+        variant="temporary"
+      >
+        Drawer Content
+      </SwipeableDrawer>
+    </>
+  );
 
   return (
     <>
       <ElevationScroll elevationValue={24}>
         <AppBar color="primary" position="sticky">
-          <Toolbar disableGutters>
+          <Toolbar disableGutters className={classes.toolbar}>
             <Button
               className={classes.logoButton}
               component={Link}
@@ -90,49 +224,7 @@ export default function Header(props) {
             >
               <img src={logo} alt="logo" className={classes.logo} />
             </Button>
-
-            <Tabs
-              value={value}
-              onChange={handleChange}
-              aria-label="website menu"
-              className={classes.tabs}
-              TabIndicatorProps={{
-                style: {
-                  display: "none",
-                },
-              }}
-            >
-              {headerTabConfig.map(({ label, path, menu }) => {
-                return menu ? (
-                  <TabWithMenu
-                    key={path}
-                    label={label}
-                    className={classes.tab}
-                    component={Link}
-                    to={path}
-                    menu={menu}
-                  />
-                ) : (
-                  <Tab
-                    key={path}
-                    label={label}
-                    className={classes.tab}
-                    component={Link}
-                    to={path}
-                  />
-                );
-              })}
-            </Tabs>
-
-            <Button
-              variant="contained"
-              color="secondary"
-              className={classes.button}
-              component={Link}
-              to="/estimate"
-            >
-              Free Estimate
-            </Button>
+            {matches ? sideDrawers : tabs}
           </Toolbar>
         </AppBar>
       </ElevationScroll>
