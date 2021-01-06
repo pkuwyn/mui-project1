@@ -1,4 +1,4 @@
-const headerTabConfig = [
+export const headerTabConfig = [
   { label: "Home", path: "/" },
   {
     label: "Services",
@@ -14,4 +14,11 @@ const headerTabConfig = [
   { label: "About Us", path: "/about" },
   { label: "Contact Us", path: "/contact" },
 ];
-export default headerTabConfig;
+
+export const tabLinkMap = headerTabConfig.reduce(
+  (acc, cur) =>
+    cur.menu
+      ? acc.concat([cur.menu.map((item) => item.path)])
+      : acc.concat(cur.path),
+  []
+);

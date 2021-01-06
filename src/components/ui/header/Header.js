@@ -15,15 +15,24 @@ import { useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import ListSubheader from "@material-ui/core/ListSubheader";
+import Collapse from "@material-ui/core/Collapse";
+
 //icon
 import MenuIcon from "@material-ui/icons/Menu";
+import ExpandLess from "@material-ui/icons/ExpandLess";
+import ExpandMore from "@material-ui/icons/ExpandMore";
 
 //local import
 import logo from "../../../assets/logo.svg";
 import ElevationScroll from "../../utils/ElevationScroll";
-
+import { headerTabConfig, tabLinkMap } from "./headerTabConfig";
 import TabWithMenu from "./TabWithMenu";
-import headerTabConfig from "./headerTabConfig";
+import ListItemWithMenu from "./ListItemWithMenu";
 
 function getCorrectIndex(linkMap, pathname) {
   let correctValue = -1;
@@ -40,15 +49,6 @@ function getCorrectIndex(linkMap, pathname) {
   });
   return correctValue;
 }
-
-//config variables
-const tabLinkMap = [
-  "/",
-  ["/services", "/customsoftware", "/mobileapps", "/websites"],
-  "/revolution",
-  "/about",
-  "/contact",
-];
 
 //tab value hook
 const useTabValue = (initValue) => {
@@ -100,6 +100,25 @@ const useStyles = makeStyles((theme) => ({
   tabs: {
     marginLeft: "auto",
   },
+  menuButton: {
+    marginLeft: "auto",
+    "&:hover": {
+      backgroundColor: "unset",
+    },
+    "& $menuIcon": {
+      height: "2.5rem",
+      width: "2.5rem",
+      [theme.breakpoints.down("sm")]: {
+        height: "2.2rem",
+        width: "2.2rem",
+      },
+      [theme.breakpoints.down("xs")]: {
+        height: "2rem",
+        width: "2rem",
+      },
+    },
+  },
+  menuIcon: {},
   tab: {
     ...theme.typography.tab,
     height: "5rem",
@@ -171,15 +190,20 @@ export default function Header(props) {
     </>
   );
 
-  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(true);
   const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
   const toggleDrawer = () => {
     setDrawerOpen(!drawerOpen);
   };
   const sideDrawers = (
     <>
-      <IconButton aria-label="menu" onClick={toggleDrawer}>
-        <MenuIcon />
+      <IconButton
+        aria-label="menu"
+        onClick={toggleDrawer}
+        className={classes.menuButton}
+        disableRipple
+      >
+        <MenuIcon className={classes.menuIcon} />
       </IconButton>
 
       {/* <Drawer
@@ -192,7 +216,9 @@ export default function Header(props) {
       </Drawer> */}
 
       <SwipeableDrawer
-        disableBackdropTransition={!iOS}
+        // disableBackdropTransition={!iOS}
+        // disableDiscovery={iOS}
+        disableBackdropTransition
         disableDiscovery={iOS}
         anchor="left"
         open={drawerOpen}
@@ -206,7 +232,26 @@ export default function Header(props) {
         }}
         variant="temporary"
       >
-        Drawer Content
+        <List>
+          {headerTabConfig.map(({ label, path, menu }) =>
+            menu ? (
+              <ListItemWithMenu key={path} menu={menu} selected>
+                <ListItemIcon>
+                  <MenuIcon />
+                </ListItemIcon>
+                <ListItemText primary={label} />
+                {/* <ListSubheader > hell</ListSubheader> */}
+              </ListItemWithMenu>
+            ) : (
+              <ListItem key={path} button>
+                <ListItemIcon>
+                  <MenuIcon />
+                </ListItemIcon>
+                <ListItemText primary={label} />
+              </ListItem>
+            )
+          )}
+        </List>
       </SwipeableDrawer>
     </>
   );
