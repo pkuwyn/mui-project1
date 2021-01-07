@@ -67,7 +67,7 @@ function App(props) {
           {pages.map(({ path, name }) => (
             <Route
               key={path}
-              // exact
+              exact
               path={path}
               component={() => <h3>{name}</h3>}
             ></Route>

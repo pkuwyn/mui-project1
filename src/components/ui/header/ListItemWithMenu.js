@@ -18,9 +18,21 @@ import ExpandMore from "@material-ui/icons/ExpandMore";
 
 //local import
 
-const useStyles = makeStyles((theme) => ({}));
+const useStyles = makeStyles((theme) => ({
+  listItem: {
+    opacity: 0.7,
+  },
+  listItemSelected: {
+    opacity: 1,
+  },
+}));
 
-export default function ListItemWithMenu({ menu, children, ...props }) {
+export default function ListItemWithMenu({
+  menu,
+  children,
+  toggleDrawer,
+  ...props
+}) {
   const classes = useStyles();
 
   let { pathname } = useLocation();
@@ -32,21 +44,30 @@ export default function ListItemWithMenu({ menu, children, ...props }) {
 
   return (
     <>
-      <ListItem {...props} button onClick={toggleOpen}>
+      <ListItem {...props}>
         {children}
-        {/* <ListItemSecondaryAction>
-  
-        {open ? <ExpandLess /> : <ExpandMore />}
-
-        </ListItemSecondaryAction> */}
-        {open ? <ExpandLess /> : <ExpandMore />}
+        <ListItemSecondaryAction onClick={toggleOpen}>
+          {open ? <ExpandLess /> : <ExpandMore />}
+        </ListItemSecondaryAction>
+        {/* {open ? <ExpandLess /> : <ExpandMore />} */}
       </ListItem>
 
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           {menu.map(({ label, path }) => (
-            <ListItem button selected={Boolean(matchPath(pathname, path))}>
-              <ListItemText primary={label} />
+            <ListItem
+              key={path}
+              button
+              selected={Boolean(matchPath(pathname, path))}
+              classes={{
+                selected: classes.listItemSelected,
+              }}
+              component={Link}
+              to={path}
+              onClick={toggleDrawer}
+              className={classes.listItem}
+            >
+              <ListItemText primary={label} inset disableTypography />
             </ListItem>
           ))}
         </List>

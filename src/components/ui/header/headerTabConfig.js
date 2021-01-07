@@ -10,6 +10,7 @@ export const headerTabConfig = [
       { label: "Website Development", path: "/websites" },
     ],
   },
+
   { label: "The Revolution", path: "/revolution" },
   { label: "About Us", path: "/about" },
   { label: "Contact Us", path: "/contact" },

@@ -24,8 +24,10 @@ import Collapse from "@material-ui/core/Collapse";
 
 //icon
 import MenuIcon from "@material-ui/icons/Menu";
-import ExpandLess from "@material-ui/icons/ExpandLess";
-import ExpandMore from "@material-ui/icons/ExpandMore";
+import ListIcon from "@material-ui/icons/List";
+import HomeIcon from "@material-ui/icons/Home";
+import AppsIcon from "@material-ui/icons/Apps";
+import FunctionsIcon from "@material-ui/icons/Functions";
 
 //local import
 import logo from "../../../assets/logo.svg";
@@ -70,16 +72,16 @@ const useTabValue = (initValue) => {
 };
 
 const useStyles = makeStyles((theme) => ({
-  // toolbarMargin: {
-  //   ...theme.mixins.toolbar,
-  //   marginBottom: "2rem",
-  //   [theme.breakpoints.down("sm")]: {
-  //     marginBottom: "1.2rem",
-  //   },
-  //   [theme.breakpoints.down("xs")]: {
-  //     marginBottom: "0.5rem",
-  //   },
-  // },
+  toolbarMargin: {
+    ...theme.mixins.toolbar,
+    marginBottom: "2rem",
+    [theme.breakpoints.down("sm")]: {
+      marginBottom: "1.2rem",
+    },
+    [theme.breakpoints.down("xs")]: {
+      marginBottom: "0.5rem",
+    },
+  },
   toolbar: {},
   logoButton: {
     padding: 0,
@@ -132,6 +134,24 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 140,
     height: 35,
   },
+
+  drawerPaper: {
+    backgroundColor: theme.palette.common.blue,
+    width: 250,
+    maxWidth: "100%",
+  },
+  drawerItem: {
+    ...theme.typography.tab,
+    color: "white",
+    opacity: 0.7,
+  },
+  drawerEstimate: {
+    ...theme.typography.estimate,
+    backgroundColor: theme.palette.common.orange,
+  },
+  drawerItemSelected: {
+    opacity: 1,
+  },
 }));
 
 export default function Header(props) {
@@ -142,6 +162,7 @@ export default function Header(props) {
   const matches = useMediaQuery(theme.breakpoints.down("md"));
 
   const [value, handleChange] = useTabValue(0);
+  let { pathname } = useLocation();
 
   const tabs = (
     <>
@@ -190,7 +211,7 @@ export default function Header(props) {
     </>
   );
 
-  const [drawerOpen, setDrawerOpen] = useState(true);
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
   const toggleDrawer = () => {
     setDrawerOpen(!drawerOpen);
@@ -222,35 +243,79 @@ export default function Header(props) {
         disableDiscovery={iOS}
         anchor="left"
         open={drawerOpen}
-        onClose={() => {
-          toggleDrawer();
-          console.log("close");
-        }}
-        onOpen={() => {
-          toggleDrawer();
-          console.log("open");
-        }}
+        onClose={toggleDrawer}
+        onOpen={toggleDrawer}
         variant="temporary"
+        style={{
+          zIndex: theme.zIndex.appBar - 1,
+        }}
+        classes={{
+          paper: classes.drawerPaper,
+        }}
       >
-        <List>
-          {headerTabConfig.map(({ label, path, menu }) =>
+        <div className={classes.toolbarMargin}></div>
+        <List disablePadding>
+          {headerTabConfig.map(({ label, path, menu }, index) =>
             menu ? (
-              <ListItemWithMenu key={path} menu={menu} selected>
+              <ListItemWithMenu
+                key={path}
+                menu={menu}
+                component={Link}
+                to={path}
+                button
+                divider
+                onClick={toggleDrawer}
+                toggleDrawer={toggleDrawer}
+                className={classes.drawerItem}
+                selected={value === index}
+                classes={{
+                  selected: classes.drawerItemSelected,
+                }}
+              >
                 <ListItemIcon>
-                  <MenuIcon />
+                  <ListIcon />
                 </ListItemIcon>
-                <ListItemText primary={label} />
+                <ListItemText primary={label} disableTypography />
                 {/* <ListSubheader > hell</ListSubheader> */}
               </ListItemWithMenu>
             ) : (
-              <ListItem key={path} button>
+              <ListItem
+                key={path}
+                button
+                divider
+                component={Link}
+                to={path}
+                onClick={toggleDrawer}
+                className={classes.drawerItem}
+                selected={value === index}
+                classes={{
+                  selected: classes.drawerItemSelected,
+                }}
+              >
                 <ListItemIcon>
-                  <MenuIcon />
+                  {path === "/" ? <HomeIcon /> : <AppsIcon />}
                 </ListItemIcon>
-                <ListItemText primary={label} />
+                <ListItemText primary={label} disableTypography />
               </ListItem>
             )
           )}
+          <ListItem
+            button
+            divider
+            component={Link}
+            to="/estimate"
+            onClick={toggleDrawer}
+            className={classes.drawerEstimate}
+            selected={pathname === "/estimate"}
+            classes={{
+              selected: classes.drawerItemSelected,
+            }}
+          >
+            <ListItemIcon>
+              <FunctionsIcon />
+            </ListItemIcon>
+            <ListItemText primary="Estimate" disableTypography />
+          </ListItem>
         </List>
       </SwipeableDrawer>
     </>
