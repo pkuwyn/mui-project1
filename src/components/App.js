@@ -8,14 +8,12 @@ import {
   Link,
   Redirect,
 } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
 
 //local
 import theme from "./ui/theme";
 import Header from "./ui/header/Header";
-import Lab from "./ui/Lab";
-import StyledButton from "./ui/StyledButton";
-
+import Footer from "./ui/footer/Footer";
+import StickyFooterHelper from "./utils/StickyFooterHelper";
 const pages = [
   {
     path: "/",
@@ -59,22 +57,23 @@ function App(props) {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Router>
-        <Header></Header>
-        {/* <Lab classes={{ label: classes.heihei }}></Lab> */}
-        {/* <StyledButton variant="contained">Hello</StyledButton> */}
-        <Switch>
-          {pages.map(({ path, name }) => (
-            <Route
-              key={path}
-              exact
-              path={path}
-              component={() => <h3>{name}</h3>}
-            ></Route>
-          ))}
 
-          <Redirect to="/"></Redirect>
-        </Switch>
+      <Router>
+        <StickyFooterHelper footer={<Footer />}>
+          <Header></Header>
+          <Switch>
+            {pages.map(({ path, name }) => (
+              <Route
+                key={path}
+                exact
+                path={path}
+                component={() => <h3>{name}</h3>}
+              ></Route>
+            ))}
+
+            <Redirect to="/"></Redirect>
+          </Switch>
+        </StickyFooterHelper>
       </Router>
     </ThemeProvider>
   );

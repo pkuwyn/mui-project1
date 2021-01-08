@@ -21,7 +21,9 @@ let theme = unstable_createMuiStrictModeTheme(
         main: arcOrange,
       },
     },
-
+    mixins: {
+      footer: {},
+    },
     typography: {
       // fontFamily: "Roboto, Microsoft YaHei",
       // htmlFontSize: 16,
