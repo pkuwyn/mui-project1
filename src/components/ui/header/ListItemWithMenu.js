@@ -37,7 +37,7 @@ export default function ListItemWithMenu({
 
   let { pathname } = useLocation();
 
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const toggleOpen = () => {
     setOpen(!open);
   };
@@ -46,7 +46,12 @@ export default function ListItemWithMenu({
     <>
       <ListItem {...props}>
         {children}
-        <ListItemSecondaryAction onClick={toggleOpen}>
+        <ListItemSecondaryAction
+          onClick={toggleOpen}
+          style={{
+            cursor: "pointer",
+          }}
+        >
           {open ? <ExpandLess /> : <ExpandMore />}
         </ListItemSecondaryAction>
         {/* {open ? <ExpandLess /> : <ExpandMore />} */}

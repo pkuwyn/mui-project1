@@ -14,10 +14,14 @@ import theme from "./ui/theme";
 import Header from "./ui/header/Header";
 import Footer from "./ui/footer/Footer";
 import StickyFooterHelper from "./utils/StickyFooterHelper";
+
+import { LandingPage } from "./pages";
+
 const pages = [
   {
     path: "/",
     name: "Home",
+    Comp: LandingPage,
   },
   {
     path: "/services",
@@ -62,12 +66,12 @@ function App(props) {
         <StickyFooterHelper footer={<Footer />}>
           <Header></Header>
           <Switch>
-            {pages.map(({ path, name }) => (
+            {pages.map(({ path, name, Comp }) => (
               <Route
                 key={path}
                 exact
                 path={path}
-                component={() => <h3>{name}</h3>}
+                component={Comp ? Comp : () => <h1>{name}</h1>}
               ></Route>
             ))}
 
