@@ -4,6 +4,7 @@ import Grid from "@material-ui/core/Grid";
 
 //local import
 import HeroBlock from "./HeroBlock";
+import ServicesBlock from "./ServicesBlock";
 
 const useStyles = makeStyles((theme) => ({}));
 
@@ -13,6 +14,7 @@ export default function LandingPage(props) {
   return (
     <Grid container direction="column">
       <HeroBlock />
+      <ServicesBlock />
     </Grid>
   );
 }

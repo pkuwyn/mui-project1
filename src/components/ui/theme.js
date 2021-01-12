@@ -52,6 +52,12 @@ let theme = unstable_createMuiStrictModeTheme(
         textTransform: "none",
         color: "white",
       },
+      h2: {
+        fontFamily: "Raleway",
+        fontWeight: 700,
+        fontSize: "2.5rem",
+      },
+      body1: {},
     },
     props: {
       // MuiToolbar: {
