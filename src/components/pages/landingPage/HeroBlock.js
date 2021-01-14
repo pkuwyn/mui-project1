@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   learn: {
-    borderWidth: 2,
+    ...theme.mixins.learnButton,
   },
   lottieContainer: {
     marginLeft: "5%",

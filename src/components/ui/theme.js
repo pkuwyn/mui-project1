@@ -6,6 +6,7 @@ import { zhCN } from "@material-ui/core/locale";
 //color defination
 const arcBlue = "#0B72B9";
 const arcOrange = "#FFBA60";
+const arcGrey = "#868686";
 let theme = unstable_createMuiStrictModeTheme(
   {
     palette: {
@@ -23,6 +24,11 @@ let theme = unstable_createMuiStrictModeTheme(
     },
     mixins: {
       footer: {},
+      learnButton: {
+        borderRadius: 100,
+        textTransform: "none",
+        borderWidth: 2,
+      },
     },
     typography: {
       // fontFamily: "Roboto, Microsoft YaHei",
@@ -57,7 +63,17 @@ let theme = unstable_createMuiStrictModeTheme(
         fontWeight: 700,
         fontSize: "2.5rem",
       },
-      body1: {},
+      h4: {
+        fontFamily: "Raleway",
+        fontWeight: 700,
+        fontSize: "1.5rem",
+      },
+      subtitle1: {
+        // fontFamily:"",
+        fontSize: "1.1rem",
+        fontWeight: 300,
+        color: arcGrey,
+      },
     },
     props: {
       // MuiToolbar: {
