@@ -15,7 +15,7 @@ import Header from "./ui/header/Header";
 import Footer from "./ui/footer/Footer";
 import StickyFooterHelper from "./utils/StickyFooterHelper";
 
-import { LandingPage } from "./pages";
+import { LandingPage, ServicesPage } from "./pages";
 
 const pages = [
   {
@@ -26,6 +26,7 @@ const pages = [
   {
     path: "/services",
     name: "services",
+    Comp: ServicesPage,
   },
   {
     path: "/customsoftware",

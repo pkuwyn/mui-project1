@@ -1,9 +1,8 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import Lottie from "react-lottie";
 import Button from "@material-ui/core/Button";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
@@ -18,19 +17,19 @@ import websiteIcon from "../../../assets/websiteIcon.svg";
 
 const servicesData = [
   {
-    title: "Custom Software Development",
-    subTitle: "Save Energy. Save Time. Save Money.",
-    desp: "Complete digital solutions, from investigation to celebration.",
-    path: "/customsoftware",
-    iconImage: customSoftwareIcon,
-  },
-  {
     title: "iOS/Android App Development",
     subTitle: "Extend Functionality. Extend Access. Increase Engagement.",
     desp:
       "Integrate your web experience or create a standalone app with either mobile platform.",
     path: "/mobileapps",
     iconImage: mobileAppsIcon,
+  },
+  {
+    title: "Custom Software Development",
+    subTitle: "Save Energy. Save Time. Save Money.",
+    desp: "Complete digital solutions, from investigation to celebration.",
+    path: "/customsoftware",
+    iconImage: customSoftwareIcon,
   },
   {
     title: "Website Development",
@@ -42,8 +41,16 @@ const servicesData = [
 ];
 const useStyles = makeStyles((theme) => ({
   servicesBlock: {
-    ...theme.mixins.blockMargin,
     width: "100%",
+    marginTop: "2rem",
+    paddingBottom: "2rem",
+  },
+  pageTitle: {
+    marginLeft: "3rem",
+    [theme.breakpoints.down("xs")]: {
+      marginLeft: 0,
+      textAlign: "center",
+    },
   },
   serviceContainer: {
     marginTop: "5rem",
@@ -55,6 +62,7 @@ const useStyles = makeStyles((theme) => ({
       justifyContent: "center",
     },
   },
+
   contentContainer: {
     width: "30%",
     [theme.breakpoints.down("sm")]: {
@@ -63,6 +71,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("xs")]: {
       width: "100%",
       order: 2,
+      textAlign: "center",
     },
   },
   learnMoreButton: {
@@ -81,20 +90,29 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   icon: {
-    maxWidth: 300,
+    width: 300,
     [theme.breakpoints.down("md")]: {
-      maxWidth: 200,
+      width: 200,
+    },
+    [theme.breakpoints.down("xs")]: {
+      width: 150,
     },
   },
 }));
 
-export default function ServicesBlock(props) {
+export default function ServicesPage(props) {
   const classes = useStyles();
   const theme = useTheme();
 
   const matchesSm = useMediaQuery(theme.breakpoints.only("sm"));
   return (
-    <Grid item className={classes.servicesBlock}>
+    <Grid className={classes.servicesBlock} container direction="column">
+      <Grid item className={classes.pageTitle}>
+        <Typography variant="h2" color="primary">
+          Services
+        </Typography>
+      </Grid>
+
       {servicesData.map(({ title, subTitle, desp, path, iconImage }, index) => (
         <Grid
           key={title}
@@ -105,19 +123,13 @@ export default function ServicesBlock(props) {
           justify={
             matchesSm
               ? "space-between"
-              : index % 2 === 0
+              : index % 2 === 1
               ? "flex-start"
               : "flex-end"
           }
         >
           <Grid item className={classes.contentContainer}>
-            <Typography
-              className={classes.title}
-              variant="h4"
-              color="primary"
-              // align="center"
-              // paragraph
-            >
+            <Typography className={classes.title} variant="h4" color="primary">
               {title}
             </Typography>
             <Typography

@@ -29,6 +29,9 @@ let theme = unstable_createMuiStrictModeTheme(
         textTransform: "none",
         borderWidth: 2,
       },
+      blockMargin: {
+        marginTop: "2rem",
+      },
     },
     typography: {
       // fontFamily: "Roboto, Microsoft YaHei",
@@ -63,16 +66,23 @@ let theme = unstable_createMuiStrictModeTheme(
         fontWeight: 700,
         fontSize: "2.5rem",
       },
+      h3: {
+        fontFamily: "Pacifico",
+        fontSize: "2rem",
+      },
       h4: {
         fontFamily: "Raleway",
         fontWeight: 700,
         fontSize: "1.5rem",
       },
       subtitle1: {
-        // fontFamily:"",
         fontSize: "1.1rem",
         fontWeight: 300,
         color: arcGrey,
+      },
+      subtitle2: {
+        fontSize: "1.25rem",
+        fontWeight: 300,
       },
     },
     props: {
@@ -99,6 +109,6 @@ let theme = unstable_createMuiStrictModeTheme(
   zhCN
 );
 
-theme = responsiveFontSizes(theme);
+// theme = responsiveFontSizes(theme);
 // console.log(theme.props.MuiToolbar.root);
 export default theme;
