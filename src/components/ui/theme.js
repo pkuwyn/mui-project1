@@ -13,6 +13,7 @@ let theme = unstable_createMuiStrictModeTheme(
       common: {
         blue: arcBlue,
         orange: arcOrange,
+        grey: arcGrey,
       },
       // type: "dark",
       primary: {
@@ -82,6 +83,10 @@ let theme = unstable_createMuiStrictModeTheme(
       },
       subtitle2: {
         fontSize: "1.25rem",
+        fontWeight: 300,
+      },
+      body1: {
+        fontSize: "1.1rem",
         fontWeight: 300,
       },
     },

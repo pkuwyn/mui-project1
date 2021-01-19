@@ -15,7 +15,7 @@ import Header from "./ui/header/Header";
 import Footer from "./ui/footer/Footer";
 import StickyFooterHelper from "./utils/StickyFooterHelper";
 
-import { LandingPage, ServicesPage } from "./pages";
+import { LandingPage, ServicesPage ,CustomSoftwarePage} from "./pages";
 
 const pages = [
   {
@@ -31,6 +31,7 @@ const pages = [
   {
     path: "/customsoftware",
     name: "customsoftware",
+    Comp:CustomSoftwarePage
   },
   {
     path: "/mobileapps",
