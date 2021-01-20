@@ -37,19 +37,26 @@ const useStyles = makeStyles((theme) => ({
       maxWidth: "70%",
     },
   },
-  lottieContainer: {
-    maxWidth: "50%",
-
-    margin: "0 auto 3rem auto",
+  imageContainer: {
+    width: "50%",
+    marginBottom: "3rem",
+    textAlign: "center",
 
     [theme.breakpoints.down("sm")]: {
-      maxWidth: "70%",
+      width: "60%",
     },
+    [theme.breakpoints.down("xs")]: {
+      width: "70%",
+    },
+  },
+  image: {
+    maxWidth: 600,
+    width: "100%",
   },
 }));
 
 export default function CenteredAnimationBlock({
-  data: { title, paragraph, animation },
+  data: { title, paragraph, image },
 }) {
   const classes = useStyles();
 
@@ -65,17 +72,8 @@ export default function CenteredAnimationBlock({
       alignItems="center"
       direction="column"
     >
-      <Grid item className={classes.lottieContainer}>
-        <Lottie
-          options={{
-            loop: true,
-            autoplay: true,
-            animationData: animation,
-            rendererSettings: {
-              preserveAspectRatio: "xMidYMid slice",
-            },
-          }}
-        />
+      <Grid item className={classes.imageContainer}>
+        <img src={image} alt={title} className={classes.image} />
       </Grid>
       <Grid item className={classes.despText}>
         <Typography variant="h4" color="primary" gutterBottom>
