@@ -50,6 +50,10 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "40rem",
     marginLeft: "2rem",
     marginRight: "auto",
+    [theme.breakpoints.down("md")]: {
+      textAlign: "center",
+    },
+
     [theme.breakpoints.down("sm")]: {
       maxWidth: "100%",
     },
@@ -74,8 +78,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function HeadingBlock(props) {
   const classes = useStyles();
-  //   const theme = useTheme();
-  //   const matchesSm = useMediaQuery(theme.breakpoints.only("sm"));
+  // const theme = useTheme();
+  // const matchesMd = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
     <>
